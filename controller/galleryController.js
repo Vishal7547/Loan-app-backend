@@ -3,6 +3,7 @@ import getDataUri from "../utils/dataUri.js";
 import cloudinary from "cloudinary";
 export const galleryController = async (req, res) => {
   try {
+    console.log(req.user._id, "fuasfhasfdahsfdhasf");
     const gallery = await Gallery.find({ user: req.user._id }).populate("user");
     if (!gallery) {
       return res.status(404).send({
