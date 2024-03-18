@@ -1,8 +1,9 @@
 import Gallery from "../model/Gallery.js";
 import getDataUri from "../utils/dataUri.js";
+import cloudinary from "cloudinary";
 export const galleryController = async (req, res) => {
   try {
-    const gallery = await Gallery.find({});
+    const gallery = await Gallery.find({ user: req.user._id }).populate("user");
     if (!gallery) {
       return res.status(404).send({
         success: false,
@@ -35,24 +36,26 @@ export const galleryAddController = async (req, res) => {
     }
     const fileUri = getDataUri(file);
     const myCloud = await cloudinary.v2.uploader.upload(fileUri.content);
-    const task = await Gallery.create({
+
+    const gallery = await Gallery.create({
       name,
       pic: {
         public_id: myCloud.public_id,
         url: myCloud.secure_url,
       },
+      user: req.user._id,
     });
 
     res.status(201).send({
       success: true,
       message: "Gallery is added",
-      task,
+      gallery,
     });
   } catch (e) {
     res.status(500).send({
       success: false,
       message: "internal server error",
-      task,
+      e,
     });
   }
 };
