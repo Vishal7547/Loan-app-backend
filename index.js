@@ -35,7 +35,7 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/pic", galleryRoute);
 
 app.get("/", (req, res) => {
-  res.send(`<h1>welcome to Dobby Ads
+  res.send(`<h1>welcome to <b> Dobby Ads</b>
 </h1>`);
 });
 
