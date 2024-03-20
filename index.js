@@ -6,7 +6,7 @@ import cloudinary from "cloudinary";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/connectDb.js";
 import userRoute from "./routes/userRoute.js";
-import galleryRoute from "./routes/galleryRoute.js";
+import loanRoutes from "./routes/loanRoutes.js";
 
 config({
   path: "./config/config.env",
@@ -27,12 +27,12 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 // routes
 app.use("/api/v1/user", userRoute);
-app.use("/api/v1/pic", galleryRoute);
+app.use("/api/v1/loan", loanRoutes);
 
 app.get("/", (req, res) => {
   res.send(`<h1>welcome to <b> Dobby Ads</b>

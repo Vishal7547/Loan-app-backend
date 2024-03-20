@@ -27,3 +27,21 @@ export const isAuthenticated = async (req, res, next) => {
     });
   }
 };
+
+export const isAdmin = async (req, res, next) => {
+  try {
+    if (req.user.role !== "admin") {
+      return res.status(401).send({
+        success: false,
+        message: "you are not authorized",
+      });
+    }
+    next();
+  } catch (e) {
+    return res.status(500).send({
+      success: false,
+      message: "internal server error",
+      e,
+    });
+  }
+};
